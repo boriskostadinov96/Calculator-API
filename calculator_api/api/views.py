@@ -81,6 +81,7 @@ def upload_file(request):
     # Invalid request
     return JsonResponse({"error": "Invalid request"}, status=400)
 
+
 def admin_ui(request):
     # Fetch all request logs and calculation results
     request_logs = RequestLog.objects.all()
@@ -90,3 +91,7 @@ def admin_ui(request):
         'request_logs': request_logs,
         'calculation_results': calculation_results,
     })
+
+
+def index(request):
+    return render(request, 'api/index.html')
