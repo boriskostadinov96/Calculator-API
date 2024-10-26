@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <h1>Welcome to the Calculator API!</h1>
-        <form id="uploadForm" enctype="multipart/form-data" method="post" action="{% url 'upload_file' %}">
+        <form id="uploadForm" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="file" name="file" accept=".csv" required>
             <button type="submit">Upload CSV</button>
