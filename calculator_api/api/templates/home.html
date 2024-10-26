@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator API Home</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to the Calculator API!</h1>
+            <p>Upload a CSV file to perform calculations.</p>
+        </header>
+        <main>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".csv" required>
+                <button type="submit">Upload CSV</button>
+            </form>
+            <div id="message"></div>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').onsubmit = async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+            const response = await fetch('/api/upload/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Jf8s!j9L2fS0K'  // Include the auth header
+                },
+                body: formData
+            });
+
+            const result = await response.json();
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = result.message || result.error || '';
+            messageDiv.style.color = response.ok ? 'green' : 'red';
+        };
+    </script>
+</body>
+</html>

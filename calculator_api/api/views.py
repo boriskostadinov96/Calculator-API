@@ -91,3 +91,7 @@ def admin_ui(request):
         'request_logs': request_logs,
         'calculation_results': calculation_results,
     })
+
+
+def home(request):
+    return render(request, 'home.html')
