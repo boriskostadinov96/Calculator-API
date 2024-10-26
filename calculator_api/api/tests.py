@@ -4,10 +4,10 @@ from django.test import RequestFactory
 
 # Sample data for tests
 csv_data_valid = [
-    ("2", "+", "3"),  # 2 + 3 = 5
-    ("10", "-", "4"),  # 10 - 4 = 6
-    ("3", "*", "3"),  # 3 * 3 = 9
-    ("8", "/", "2")  # 8 / 2 = 4
+    ("2", "+", "3"),
+    ("10", "-", "4"),
+    ("3", "*", "3"),
+    ("8", "/", "2")
 ]
 
 csv_data_div_by_zero = [
