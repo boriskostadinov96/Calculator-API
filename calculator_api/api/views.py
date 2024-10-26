@@ -6,6 +6,7 @@ from .models import RequestLog, CalculationResult
 
 AUTH_PASSPHRASE = "Jf8s!j9L2fS0K"
 
+
 @csrf_exempt
 def upload_file(request):
     auth_header = request.headers.get("Authorization")
@@ -68,7 +69,10 @@ def upload_file(request):
             CalculationResult.objects.create(request=request_log, result=total_sum)
 
             # Return success response with the result
-            return JsonResponse({"message": "File processed successfully", "result": total_sum}, status=200)
+            return JsonResponse({
+                "message": "File processed successfully",
+                "result": total_sum  # Include the final result in the response
+            }, status=200)
 
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
