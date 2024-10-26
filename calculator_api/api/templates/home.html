@@ -4,22 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator API Home</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- Link to your CSS file -->
+    <title>Calculator API</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Welcome to the Calculator API!</h1>
-            <p>Upload a CSV file to perform calculations.</p>
-        </header>
-        <main>
-            <form id="uploadForm" enctype="multipart/form-data">
-                <input type="file" name="file" accept=".csv" required>
-                <button type="submit">Upload CSV</button>
-            </form>
-            <div id="message"></div>
-        </main>
+        <h1>Welcome to the Calculator API!</h1>
+        <p>Use the form below to upload a CSV file for calculations.</p>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" required>
+            <button type="submit">Upload CSV</button>
+        </form>
+        <div id="message"></div>
     </div>
 
     <script>
@@ -38,7 +34,11 @@
             const result = await response.json();
             const messageDiv = document.getElementById('message');
             messageDiv.textContent = result.message || result.error || '';
-            messageDiv.style.color = response.ok ? 'green' : 'red';
+            if (response.ok) {
+                messageDiv.style.color = 'green';
+            } else {
+                messageDiv.style.color = 'red';
+            }
         };
     </script>
 </body>
