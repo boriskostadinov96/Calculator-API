@@ -8,38 +8,38 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to the Calculator API!</h1>
-        <p>Use the form below to upload a CSV file for calculations.</p>
-        <form id="uploadForm" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".csv" required>
-            <button type="submit">Upload CSV</button>
-        </form>
-        <div id="message"></div>
-    </div>
+<div class="container">
+    <h1>Welcome to the Calculator API!</h1>
+    <p>Use the form below to upload a CSV file for calculations.</p>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">Upload CSV</button>
+    </form>
+    <div id="message"></div>
+</div>
 
-    <script>
-        document.getElementById('uploadForm').onsubmit = async function(event) {
-            event.preventDefault(); // Prevent default form submission
+<script>
+    document.getElementById('uploadForm').onsubmit = async function (event) {
+        event.preventDefault();
 
-            const formData = new FormData(this);
-            const response = await fetch('/api/upload/', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Jf8s!j9L2fS0K'  // Include the auth header
-                },
-                body: formData
-            });
+        const formData = new FormData(this);
+        const response = await fetch('/api/upload/', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Jf8s!j9L2fS0K'
+            },
+            body: formData
+        });
 
-            const result = await response.json();
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = result.message || result.error || '';
-            if (response.ok) {
-                messageDiv.style.color = 'green';
-            } else {
-                messageDiv.style.color = 'red';
-            }
-        };
-    </script>
+        const result = await response.json();
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = result.message || result.error || '';
+        if (response.ok) {
+            messageDiv.style.color = 'green';
+        } else {
+            messageDiv.style.color = 'red';
+        }
+    };
+</script>
 </body>
 </html>

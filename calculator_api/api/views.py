@@ -12,38 +12,31 @@ AUTH_PASSPHRASE = "Jf8s!j9L2fS0K"
 def upload_file(request):
     auth_header = request.headers.get("Authorization")
 
-    # Authorization check
     if auth_header != AUTH_PASSPHRASE:
         return JsonResponse({"error": "Unauthorized"}, status=401)
 
-    # Check for POST request and ensure file is uploaded
     if request.method == 'POST' and request.FILES.get('file'):
         uploaded_file = request.FILES['file']
 
-        # Ensure the file is a CSV
         if not uploaded_file.name.endswith('.csv'):
             return JsonResponse({"error": "Invalid file format. Please upload a CSV file."}, status=400)
 
         try:
-            # Decode file contents and read the CSV
             file_data = uploaded_file.read().decode('utf-8')
             io_string = io.StringIO(file_data)
             reader = csv.reader(io_string, delimiter=',')
 
-            total_sum = 0  # Initialize total for summing up calculations
-            header = True  # To skip the header if necessary
+            total_sum = 0
+            header = True
 
             for row in reader:
-                # Skip header row, if present
                 if header:
                     header = False
                     continue
 
-                # Skip rows that do not have 3 columns
                 if len(row) != 3:
                     continue
 
-                # Parse values from CSV
                 try:
                     left_operand = float(row[0].strip())
                     operator = row[1].strip()
@@ -51,7 +44,6 @@ def upload_file(request):
                 except ValueError:
                     return JsonResponse({"error": "Invalid data format in the CSV."}, status=400)
 
-                # Perform calculations
                 if operator == '+':
                     total_sum += left_operand + right_operand
                 elif operator == '-':
@@ -63,16 +55,14 @@ def upload_file(request):
                         return JsonResponse({"error": "Division by zero is not allowed."}, status=400)
                     total_sum += left_operand / right_operand
                 else:
-                    continue  # Skip if the operator is unrecognized
+                    continue
 
-            # Save request log and result to the database
             request_log = RequestLog.objects.create(user="example_user", name=uploaded_file.name)
             CalculationResult.objects.create(request=request_log, result=total_sum)
 
-            # Return success response with the result
             return JsonResponse({
                 "message": "File processed successfully",
-                "result": total_sum  # Include the final result in the response
+                "result": total_sum
             }, status=200)
 
         except Exception as e:
@@ -83,7 +73,6 @@ def upload_file(request):
 
 
 def admin_ui(request):
-    # Fetch all request logs and calculation results
     request_logs = RequestLog.objects.all()
     calculation_results = CalculationResult.objects.all()
 
