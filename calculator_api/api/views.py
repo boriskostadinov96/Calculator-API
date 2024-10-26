@@ -1,6 +1,7 @@
 import csv
 import io
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .models import RequestLog, CalculationResult
 
@@ -79,3 +80,13 @@ def upload_file(request):
 
     # Invalid request
     return JsonResponse({"error": "Invalid request"}, status=400)
+
+def admin_ui(request):
+    # Fetch all request logs and calculation results
+    request_logs = RequestLog.objects.all()
+    calculation_results = CalculationResult.objects.all()
+
+    return render(request, 'admin_ui.html', {
+        'request_logs': request_logs,
+        'calculation_results': calculation_results,
+    })
