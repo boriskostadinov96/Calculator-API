@@ -10,7 +10,6 @@ def home_view(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
     path('', home_view, name='home'),
     path('api/', include('api.urls')),
 ]

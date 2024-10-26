@@ -91,7 +91,3 @@ def admin_ui(request):
         'request_logs': request_logs,
         'calculation_results': calculation_results,
     })
-
-
-def index(request):
-    return render(request, 'api/index.html')
