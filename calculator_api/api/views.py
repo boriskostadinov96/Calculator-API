@@ -68,7 +68,6 @@ def upload_file(request):
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
 
-    # Invalid request
     return JsonResponse({"error": "Invalid request"}, status=400)
 
 
